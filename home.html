@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical Chatbot</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <link
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css"
+    rel="stylesheet"
+    />
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #ebecee;
+            color: #333;
+        }
+        .navbar {
+            background-color: rgb(31, 30, 30);
+        }
+        .navbar-brand, .nav-link {
+            color: #fff !important;
+            transition: font-size 0.3s ease, color 0.3s ease;
+        }
+        .nav-link:hover {
+            font-size: 1.2rem; /* Increases font size on hover */
+            color: #ffcc00 !important; /* Optional: Change hover color */
+        }
+        .hero-section {
+            position: relative;
+            background-image: url('https://www.shutterstock.com/image-photo/hand-interacting-medical-icons-projected-260nw-2452963073.jpg');
+            background-size: cover;
+            height: 550px;
+            width: auto;
+            background-position: center;
+            color: black;
+            padding: 50px 0;
+            text-align: center;
+        }
+        .hero-section h1 {
+            font-size: 2.5rem;
+            font-weight: 700;
+            width: 30vw;
+            margin-top: 65px;
+        }
+        .hero-section p {
+            font-size: 1.2rem;
+            margin-top: 10px;
+            width: 30vw;
+        }
+        .time-display {
+            position: absolute;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 1.5rem;
+            color: black;
+            font-weight: bold;
+            text-align: center;
+            line-height: 1.5;
+        }
+        .card {
+            border: none;
+            transition: transform 0.2s;
+        }
+        .card:hover {
+            transform: scale(1.05);
+        }
+        .footer {
+            background-color: rgb(31, 30, 30);
+            color: #fff;
+            padding: 40px 0;
+        }
+
+        .footer h5 {
+            font-size: 1.25rem;
+            font-weight: 700;
+            margin-bottom: 15px;
+        }
+
+        .footer p, .footer a {
+            font-size: 0.9rem;
+            color: #fff;
+            text-decoration: none;
+        }
+        .footer a {
+        transition: color 0.3s, text-decoration 0.3s; /* Add transition for smooth effect */
+        }
+
+        .footer a:hover {
+            color: #4c51bf; /* Change the color on hover */
+            text-decoration: underline; /* Add underline on hover */
+        }
+
+
+        .footer .list-unstyled {
+            padding: 0;
+            list-style: none;
+        }
+        .footer .list-unstyled li {
+            margin-bottom: 5px;
+        }
+        .faq-section .card:hover {
+            transform: none; /* Remove scaling */
+            background-color: inherit; /* Maintain default color */
+        }
+        .carousel-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #4c51bf;
+            max-width: 600px;
+            text-align: center; /* Align text horizontally */
+            margin: 0 auto; /* Center horizontally */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            align-items: center; /* Center vertically */
+            height: 100%; /* Ensure it takes up the parent container height */
+        }
+
+        #healthTipsCarousel {
+            background: linear-gradient(45deg, skyblue, pink);
+            border-radius: 10px;
+            padding: 20px;
+        }
+
+        .carousel-text {
+            font-size: 1rem;
+            color: #555;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        
+        .carousel-control-prev-icon,
+        .carousel-control-next-icon {
+            background-color: #4c51bf;
+            border-radius: 50%;
+            padding: 10px;
+        }
+
+        .carousel-control-prev-icon:hover,
+        .carousel-control-next-icon:hover {
+            background-color: #3b4c8a;
+        }
+        .social-icons {
+        display: flex;
+        justify-content: center; /* Align icons to the center */
+        gap: 20px; /* Add spacing between icons */
+        margin: 10px 0;
+    }
+
+    .social-icons a {
+        text-decoration: none;
+        color: inherit;
+        font-size: 1.5rem; /* Icon size */
+        transition: color 0.3s;
+    }
+
+    .social-icons a:hover {
+        color: #4c51bf; /* Change icon color on hover */
+    }
+    </style>
+</head>
+
+<body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg">
+        <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="https://cdn-icons-png.flaticon.com/512/2966/2966327.png" alt="Logo" style="width:30px; height:30px; margin-right:10px;">
+            Medical Chatbot
+        </a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav ml-auto">
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('home') }}">Home</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('login') }}">Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('signup') }}">Sign Up</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ url_for('contact') }}">Contact Us</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <div class="hero-section">
+        <!-- Time and Greeting Display -->
+        <div id="time-container" class="time-display"></div>
+        <div class="container text-left">
+            <h1>Welcome to the Cancer and General Medical Chatbot</h1>
+            <p>Your trusted source for cancer information and general disease guidance</p>
+            <a href="/signup" class="btn btn-primary btn-lg mt-4">Get Started</a>
+        </div>
+    </div>
+    <!-- Info Section -->
+    <div class="container my-5">
+        <div class="row text-center">
+            <div class="col-md-4">
+                <div class="card py-4">
+                    <div class="card-body">
+                        <h5 class="card-title">Comprehensive Cancer Insights</h5>
+                        <p class="card-text">Access detailed info about various types of cancer, symptoms and treatments.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card py-4">
+                    <div class="card-body">
+                        <h5 class="card-title">General Disease Awareness</h5>
+                        <p class="card-text">Stay informed about common diseases, their symptoms, and preventive measures.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card py-4">
+                <div class="card-body">
+                    <h5 class="card-title">Personalized Health Guidance</h5>
+                    <p class="card-text">Receive tailored advice based on your health conditions and personal history.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- How It Works Section -->
+<div class="container my-5">
+    <h3 class="text-center mb-4">How It Works</h3>
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card py-4">
+                <div class="card-body">
+                    <h5 class="card-title">Step 1</h5>
+                    <p class="card-text">Enter your symptoms or health query into the chatbot.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card py-4">
+                <div class="card-body">
+                    <h5 class="card-title">Step 2</h5>
+                    <p class="card-text">The chatbot analyzes your input using AI technology.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card py-4">
+                <div class="card-body">
+                    <h5 class="card-title">Step 3</h5>
+                    <p class="card-text">Get personalized health guidance or consult a professional.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Features Section -->
+<div class="container my-5">
+    <h3 class="text-center mb-4">Features</h3>
+    <div class="row text-center">
+        <div class="col-md-4">
+            <div class="card py-4">
+                <div class="card-body">
+                    <h5 class="card-title">24/7 Availability</h5>
+                    <p class="card-text">Our chatbot is available round the clock to assist you anytime, anywhere.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card py-4">
+                <div class="card-body">
+                    <h5 class="card-title">Personalized Guidance</h5>
+                    <p class="card-text">Receive tailored advice based on your specific symptoms and history.</p>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card py-4">
+                <div class="card-body">
+                    <h5 class="card-title">Secure and Private</h5>
+                    <p class="card-text">Your data is encrypted and protected to ensure complete privacy.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Map Section -->
+<div class="container my-5">
+    <h3 class="text-center mb-4">Find Nearby Hospitals</h3>
+    <div class="text-center">
+        <iframe
+            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3153.8354345094267!2d-122.47261918468153!3d37.7578151797594!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x808f7fd6c70d943f%3A0xa8f923db14b9f3f0!2sUCSF%20Medical%20Center!5e0!3m2!1sen!2sus!4v1630516435009!5m2!1sen!2sus"
+            width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy"></iframe>
+    </div>
+</div>
+
+<!-- FAQ Section -->
+<div class="container my-5 faq-section">
+    <h3 class="text-center mb-4">Frequently Asked Questions</h3>
+    <div class="accordion" id="faqAccordion">
+        <div class="card">
+            <div class="card-header" id="faq1">
+                <h5>
+                    <button class="btn btn-link" type="button" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                        What is the purpose of this chatbot?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapse1" class="collapse show" aria-labelledby="faq1" data-parent="#faqAccordion">
+                <div class="card-body">
+                    This chatbot provides personalized health guidance and assists with symptom analysis.
+                </div>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-header" id="faq2">
+                <h5>
+                    <button class="btn btn-link collapsed" type="button" data-toggle="collapse" data-target="#collapse2" aria-expanded="false" aria-controls="collapse2">
+                        How secure is my information?
+                    </button>
+                </h5>
+            </div>
+            <div id="collapse2" class="collapse" aria-labelledby="faq2" data-parent="#faqAccordion">
+                <div class="card-body">
+                    Your data is encrypted and stored securely.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Health Tips Carousel -->
+<div class="container my-5">
+    <h3 class="text-center mb-4">Health Tips</h3>
+    <div id="healthTipsCarousel" class="carousel slide" data-ride="carousel">
+        <div class="carousel-inner">
+            <div class="carousel-item active">
+                <h5 class="carousel-title">Stay Hydrated</h5>
+                <p class="carousel-text">Drink plenty of water throughout the day to keep your body hydrated and
+                    healthy.</p>
+            </div>
+            <div class="carousel-item">
+                <h5 class="carousel-title">Eat a Balanced Diet</h5>
+                <p class="carousel-text">Maintain a balanced diet with adequate nutrition to support your overall
+                    health.</p>
+            </div>
+            <div class="carousel-item">
+                <h5 class="carousel-title">Get Regular Exercise</h5>
+                <p class="carousel-text">Exercise regularly to improve your strength, flexibility, and overall
+                    wellness.</p>
+            </div>
+        </div>
+        <a class="carousel-control-prev" href="#healthTipsCarousel" role="button" data-slide="prev">
+            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+            <span class="sr-only">Previous</span>
+        </a>
+        <a class="carousel-control-next" href="#healthTipsCarousel" role="button" data-slide="next">
+            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+            <span class="sr-only">Next</span>
+        </a>
+    </div>
+</div>
+
+<!-- Footer Section -->
+<div class="footer">
+    <div class="container">
+        <div class="row text-center">
+            <!-- About Section -->
+            <div class="col-md-4">
+                <h5>About Us</h5>
+                <p>Your trusted source for personalized medical guidance and healthcare information.</p>
+                <div class="social-icons">
+                    <a href="https://twitter.com" target="_blank">
+                        <i class="fab fa-twitter"></i>
+                    </a>
+                    <a href="https://instagram.com" target="_blank">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                    <a href="https://facebook.com" target="_blank">
+                        <i class="fab fa-facebook"></i>
+                    </a>
+                </div>
+            </div>
+
+            <!-- Quick Links Section -->
+            <div class="col-md-4">
+                <h5>Quick Links</h5>
+                <ul class="list-unstyled">
+                    <li><a href="/" style="color: #fff; text-decoration: none;"><u>Home</u></a></li>
+                    <li><a href="/login" style="color: #fff; text-decoration: none;"><u>Login</u></a></li>
+                    <li><a href="/signup" style="color: #fff; text-decoration: none;"><u>Sign Up</u></a></li>
+                    <li><a href="/contact" style="color: #fff; text-decoration: none;"><u>Contact Us</u></a></li>
+                    <li>
+                        <a href="/privacy-policy" style="color: #fff; text-decoration: none; margin-right: 10px;">Privacy Policy</a>
+                        <a href="/terms-of-service" style="color: #fff; text-decoration: none;">Terms of Service</a>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Contact Section -->
+            <div class="col-md-4">
+                <h5>Contact</h5>
+                <p>Email: <a href="mailto:support@medicalchatbot.com" style="color: #fff; text-decoration: none;">support@medicalchatbot.com</a></p>
+                <p>Phone: +1 (123) 456-7890</p>
+                <p>Address: 123 Health Street, Medical City</p>
+            </div>
+        </div>
+
+        <div class="row mt-3">
+            <div class="col text-center">
+                <p>&copy; 2024 Medical Chatbot. All rights reserved.</p>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.6.0/dist/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // Select all cards except those in the FAQ section
+        const cards = document.querySelectorAll('.card:not(.faq-section .card)');
+
+        // Add event listeners for mouseenter and mouseleave only to the selected cards
+        cards.forEach(card => {
+            card.addEventListener('mouseenter', () => {
+                card.style.backgroundColor = '#83D5DE'; // Highlight color
+            });
+
+            card.addEventListener('mouseleave', () => {
+                card.style.backgroundColor = ''; // Restore to original color
+            });
+        });
+    });
+</script>
+
+    <script>
+        // Function to get greeting based on the time of day
+        function getGreeting() {
+        const currentHour = new Date().getHours();
+        if (currentHour < 12) {
+            return "Good Morning!";
+        } else if (currentHour < 18) {
+            return "Good Afternoon!";
+        } else {
+            return "Good Evening!";
+        }
+    }
+
+    // Function to update the time and greeting
+    function updateTime() {
+        const timeContainer = document.getElementById('time-container');
+        const currentTime = new Date();
+        const options = { hour: '2-digit', minute: '2-digit', second: '2-digit', hour12: false }; // 24-hour format
+        const timeString = currentTime.toLocaleTimeString('en-US', options);
+        const greeting = getGreeting();
+        timeContainer.innerHTML = `${greeting}<br>${timeString}`;
+    }
+
+    // Update the time and greeting every second
+    setInterval(updateTime, 1000);
+
+    // Initialize time and greeting on page load
+    updateTime();
+    </script>
+</body>
+</html>

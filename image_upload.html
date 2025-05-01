@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Image Classification</title>
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+</head>
+<body>
+  <div class="container mt-5">
+    <h2 class="text-center">Upload an Image to Predict</h2>
+    <form action="{{ url_for('image_upload') }}" method="post" enctype="multipart/form-data">
+      <div class="form-group">
+        <input type="file" class="form-control" name="file" required>
+      </div>
+      <button type="submit" class="btn btn-primary">Upload and Predict</button>
+    </form>
+
+    {% if image_prediction %}
+    <div class="mt-4">
+      <h3>Prediction: <span class="text-success">{{ image_prediction }}</span></h3>
+      <img src="{{ filepath }}" class="img-fluid mt-3" style="max-height: 300px;">
+    </div>
+    {% endif %}
+  </div>
+</body>
+</html>
