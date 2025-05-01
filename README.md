@@ -1,1 +1,1 @@
-# AI---Powered-Multi-Modal-Diagnostic-Treatment-Recommendation-System-
+# AI-Powered Multi-Modal Diagnostic & Treatment Recommendation System
